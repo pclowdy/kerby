@@ -1,0 +1,51 @@
+syntax = "proto3";
+package inventory;
+option go_package = "k8s-microservices-app/proto/inventory";
+
+service InventoryService {
+  rpc CheckStock(CheckStockRequest) returns (CheckStockResponse);
+  rpc DeductStock(DeductStockRequest) returns (DeductStockResponse);
+  rpc GetAllInventory(GetAllInventoryRequest) returns (GetAllInventoryResponse);
+  rpc SetStock(SetStockRequest) returns (SetStockResponse);
+}
+
+message CheckStockRequest {
+  string product_id = 1;
+  int32 quantity = 2;
+}
+
+message CheckStockResponse {
+  bool available = 1;
+}
+
+message DeductStockRequest {
+  string product_id = 1;
+  int32 quantity = 2;
+}
+
+message DeductStockResponse {
+  bool success = 1;
+  string error = 2;
+  int32 remaining_quantity = 3;
+}
+
+message GetAllInventoryRequest {}
+
+message InventoryItem {
+  string product_id = 1;
+  int32 quantity = 2;
+}
+
+message GetAllInventoryResponse {
+  repeated InventoryItem items = 1;
+}
+
+message SetStockRequest {
+  string product_id = 1;
+  int32 quantity = 2;
+}
+
+message SetStockResponse {
+  bool success = 1;
+  string error = 2;
+}
